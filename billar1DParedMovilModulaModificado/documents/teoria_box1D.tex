@@ -1,0 +1,92 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{geometry}
+\geometry{margin=2cm}
+
+\title{Documentación: Simulación de Partícula en Caja 1D con Pared Móvil e Inelasticidad}
+\author{Proyecto Físico-Computacional}
+\date{Octubre 2025}
+
+\begin{document}
+\maketitle
+
+\section{Planteamiento del problema}
+Se simula una partícula de masa $m$ que se mueve dentro de una caja unidimensional con una pared derecha móvil:
+\[
+x_R(t) = L_0 - u t
+\]
+donde $L_0$ es la longitud inicial de la caja y $u$ la velocidad de la pared derecha.
+
+La partícula puede chocar con:
+\begin{itemize}
+    \item \textbf{Pared izquierda (fija):} colisión inelástica con coeficiente de restitución $e$.
+    \item \textbf{Pared derecha (móvil):} colisión inelástica modificada según la velocidad de la pared.
+\end{itemize}
+
+\section{Condiciones de frontera}
+La velocidad de la partícula después del choque se actualiza según:
+\[
+\begin{cases}
+x < 0 &\Rightarrow v \to - e \, v, \\
+x > x_R(t) &\Rightarrow v \to - e \, (v - 2 u),
+\end{cases}
+\]
+donde $0 < e \le 1$ es el \textbf{coeficiente de restitución}.
+
+\section{Parámetros de entrada}
+El usuario debe proporcionar:
+\begin{itemize}
+    \item $x_0$ : posición inicial de la partícula
+    \item $v_0$ : velocidad inicial
+    \item $u$ : velocidad de la pared derecha
+    \item $e$ : coeficiente de restitución
+    \item $t_0$ y $t_f$ : tiempo inicial y final de la simulación
+    \item $\Delta t$ : paso temporal de integración
+\end{itemize}
+
+\section{Método de simulación}
+La simulación se realiza mediante integración explícita paso a paso:
+\[
+x_{n+1} = x_n + v_n \Delta t, \quad t_{n+1} = t_n + \Delta t
+\]
+
+En cada paso se verifica:
+\begin{enumerate}
+    \item Colisión con la pared izquierda
+    \item Colisión con la pared derecha móvil
+    \item Actualización de la posición de la pared derecha
+    \item Cálculo de la energía cinética:
+    \[
+    E_k = \frac{1}{2} m v^2
+    \]
+\end{enumerate}
+
+Se registran los valores en un archivo de salida para posteriores gráficas y animaciones.
+
+\section{Gráficas y animaciones generadas}
+\begin{itemize}
+    \item Posición de la partícula y de la pared móvil vs. tiempo
+    \item Energía cinética de la partícula vs. tiempo
+    \item Animación GIF combinando ambas gráficas mostrando la evolución temporal
+\end{itemize}
+
+\section{Resultados y observaciones}
+\begin{itemize}
+    \item La energía cinética se conserva si $e=1$ y disminuye en colisiones inelásticas.
+    \item Con $0<e<1$, la partícula eventualmente se detiene tras múltiples colisiones.
+    \item La animación ilustra claramente el efecto de la inelasticidad en los rebotes.
+    \item Se puede incluir un contador de colisiones para cuantificar la disipación.
+\end{itemize}
+
+\section{Conclusión}
+Este modelo permite estudiar:
+\begin{itemize}
+    \item Efectos de colisiones inelásticas en un sistema simple.
+    \item Disminución progresiva de la energía cinética según el coeficiente de restitución.
+    \item Comportamiento dinámico de partículas confinadas con paredes móviles.
+\end{itemize}
+
+\end{document}

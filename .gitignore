@@ -1,0 +1,19 @@
+# Archivos binarios
+bin/
+*.o
+*.exe
+
+# Resultados
+*/results/
+*.dat
+*.png
+*.gif
+
+# Archivos de compilación de LaTeX
+*.aux
+*.log
+*.pdf
+*.toc
+
+# MacOS / Linux
+.DS_Store
