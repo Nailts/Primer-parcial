@@ -5,13 +5,14 @@
 #include <string>
 #include <cmath>
 using namespace std;
+    // Crea un script de Gnuplot, guarda PNG y abre ventana interactiva.
+    // Lee la columna 1 (tiempo) y la 2 (posicion). Salta el encabezado con 'every ::1'.
+void graficarDatos(const string& nombreArchivo, const string& nombreImagen,const string &nombreGif,double xf, double H) 
+{
+    ofstream gp("Resultados/plot_box1D.gp");
 
-
-void graficarDatos(const string& nombreArchivo, const string& nombreImagen, double xf, double H) {
-    ofstream gp("Resultados/plot_png.gp", ios::trunc);
-
-   // ====== 1) GENERAR PNG CORRECTAMENTE ======
-    gp << "set terminal pngcairo size 900,700\n";
+    // ====== 1) GENERAR PNG CORRECTAMENTE ======
+    gp << "set terminal png size 900,700\n";
     gp << "set output 'Resultados/" << nombreImagen << "'\n";
     gp << "set title 'Torpedo - Submarino'\n";
     gp << "set xlabel 'x (m)'\n";
@@ -42,9 +43,8 @@ void graficarDatos(const string& nombreArchivo, const string& nombreImagen, doub
     gp << xf << " " << H << "\n";
     gp << "e\n";
     gp << "pause -1 'Cierra esta ventana para continuar'\n\n";
+   gp .close();
 
-    gp << "unset output\n";
-    gp.close();
-
-    system("Resultados/gnuplot plot_png.gp");
+      // Ejecutar script
+      system("gnuplot Resultados/plot_box1D.gp");
 }
